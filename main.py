@@ -6,12 +6,16 @@ import os
 import random
 import aiohttp
 import asyncio
+import sys
 
 load_dotenv()
 
 token = os.getenv('DISCORD_TOKEN')
 
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+# replace file handler with stream handler for cloud logging
+handler = logging.StreamHandler(sys.stdout)
+logging.basicConfig(level=logging.INFO, handlers=[handler])
+
 intents = discord.Intents.default()
 intents.message_content=True
 intents.members = True 
@@ -78,8 +82,6 @@ async def valkyrie_error(ctx, error):
     if isinstance(error, commands.MissingRole):
         await ctx.send("You do not have permissions to do that!")
     
-logging.basicConfig(level=logging.DEBUG, handlers=[handler])
-
 async def main():
     async with bot:
         await bot.load_extension("cogs.dadjoke")
