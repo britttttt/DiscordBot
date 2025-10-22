@@ -22,7 +22,7 @@ intents.members = True
 
 bot = commands.Bot(command_prefix='/', intents=intents)
 
-verified_user = "Valkyrie"
+role_name = "Valkyrie"
 
 #Custom emoji
 mlady_tom ="<:TomMlady:1237200706474344520>"
@@ -34,7 +34,8 @@ async def on_ready():
 @bot.event
 async def on_member_join(member):
     channel = discord.utils.get(member.guild.text_channels, name='👋｜hello-get-on-in-here')
-    await member.send(f"Welcome to Valhalla,{member.mention} {mlady_tom}")
+    if channel:
+        await channel.send(f"Welcome to Valhalla, {member.mention} {mlady_tom}")
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -58,7 +59,7 @@ async def assign(ctx):
     role = discord.utils.get(ctx.guild.roles, name ="verified_user")
     if role:
         await ctx.author.add_roles(role)
-        await ctx.send(f"{ctx.author.mention} is now assigned to {verified_user}")
+        await ctx.send(f"{ctx.author.mention} is now assigned to {role_name}")
     else:
         await ctx.send("Role doesn't exist")
 
@@ -67,13 +68,13 @@ async def remove(ctx):
     role = discord.utils.get(ctx.guild.roles, name ="verified_user")
     if role:
         await ctx.author.remove_roles(role)
-        await ctx.send(f"{ctx.author.mention} is no longer assigned to {verified_user} role")
+        await ctx.send(f"{ctx.author.mention} is no longer assigned to {role_name} role")
     else:
         await ctx.send("Role doesn't exist")
 
 
 @bot.command()
-@commands.has_role(verified_user)
+@commands.has_role(role_name)
 async def valkyrie(ctx):
     await ctx.send("Welcome to Valhalla!")
 
@@ -91,5 +92,3 @@ async def main():
 if __name__ == "__main__":
     import asyncio
     asyncio.run(main())
-
-bot.run(token, log_handler=handler, log_level=logging.DEBUG)
