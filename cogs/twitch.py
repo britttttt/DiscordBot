@@ -144,13 +144,13 @@ class TwitchMonitor(commands.Cog):
                         embed = discord.Embed(
                             title=title,
                             url=url,
-                            description=f" Playing **{game_name or 'Unknown Game'}**\n",
-                            color=discord.Color.purple(),
+                            description=f" Streaming **{game_name or 'Unknown Game'}**\n",
+                            color=discord.Color.gold(),
                             timestamp=discord.utils.parse_time(started_at) if started_at else None,
                         )
-                        embed.set_author(name=f"{self.username} is LIVE on Twitch!", url=url)
+                        embed.set_author(name=f"{self.username} is streaming", url=url)
                         embed.set_image(url=thumbnail_url)
-                        embed.set_footer(text="Click the title or link above to watch!")
+                        embed.set_footer(text="")
 
                         channel = self.bot.get_channel(int(self.announce_channel_id))
                         if channel is None:
@@ -161,7 +161,7 @@ class TwitchMonitor(commands.Cog):
                                 channel = None
 
                         if channel:
-                            await channel.send(content=":red_circle: **LIVE NOW!**", embed=embed)
+                            await channel.send(content=":red_circle: ", embed=embed)
                             logging.info("Announced Twitch live stream: %s (%s)", title, game_name or "Unknown game")
 
                 else:
@@ -179,7 +179,7 @@ class TwitchMonitor(commands.Cog):
                 logging.exception("Twitch monitor encountered an error.")
 
             await asyncio.sleep(self.poll_interval)
-
+            
 
 async def setup(bot):
     await bot.add_cog(TwitchMonitor(bot))
