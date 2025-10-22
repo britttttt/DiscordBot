@@ -87,7 +87,6 @@ async def main():
     async with bot:
         await bot.load_extension("cogs.dadjoke")
         await bot.load_extension("cogs.twitch")
-        await bot.start(token)
 
 if __name__ == "__main__":
     import asyncio

@@ -26,7 +26,7 @@ Replace main with your branch name if different.
 
 ## 4. Restart the Bot Using PM2
 ```
-    pm2 restart PogBot
+    pm2 restart PogBot --update-env
 ```
 For zero downtime updates (especially with multiple processes):
 
