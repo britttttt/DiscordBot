@@ -78,28 +78,16 @@ async def valkyrie_error(ctx, error):
     if isinstance(error, commands.MissingRole):
         await ctx.send("You do not have permissions to do that!")
     
-@bot.command()
-async def dadjoke(ctx):
-    url = "https://icanhazdadjoke.com/"
-    headers = {
-        "Accept": "application/json",
-        "User-Agent": "DiscordBot (https://github.com/youruser/DiscordBot, 1.0)"
-    }
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers=headers, timeout=10) as resp:
-                if resp.status == 200:
-                    data = await resp.json()
-                    joke = data.get("joke")
-                    if joke:
-                        await ctx.send(joke)
-                        return
-                await ctx.send("Couldn't fetch a joke right now. Try again later.")
-    except asyncio.TimeoutError:
-        await ctx.send("Request timed out. Try again later.")
-    except Exception:
-        logging.exception("Failed to fetch dad joke")
-        await ctx.send("Error fetching joke.")
+logging.basicConfig(level=logging.DEBUG, handlers=[handler])
 
+async def main():
+    async with bot:
+        await bot.load_extension("cogs.dadjoke")
+        await bot.load_extension("cogs.twitch")
+        await bot.start(token)
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
