@@ -1,5 +1,3 @@
-# cogs/text_commands.py
-import discord
 from discord.ext import commands
 
 class TextCommands(commands.Cog):
@@ -8,13 +6,12 @@ class TextCommands(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.author == self.bot.user:
+        if message.author.bot:
             return
-
-        msg = message.content.lower()
-
-        if "69" in msg or "sixty nine" in msg:
+        content = message.content.lower()
+        if content == "69" or "sixty-nine" in content:
             await message.channel.send("nice")
 
-def setup(bot):
-    bot.add_cog(TextCommands(bot))
+
+async def setup(bot):
+    await bot.add_cog(TextCommands(bot))
