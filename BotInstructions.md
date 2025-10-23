@@ -39,7 +39,7 @@ Check logs to confirm:
 ```
 
 
-## 5. Save PM2 Process List (Optional)
+## 5. Save PM2 Process List
 If you made changes to the PM2 setup:
 ```
     pm2 save
