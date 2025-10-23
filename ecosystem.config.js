@@ -2,13 +2,13 @@ module.exports = {
   apps: [
     {
       name: "PogBot",
-      script: "main.py",
-      interpreter: "/root/DiscordBot/.venv/bin/python",
+      script: "/root/DiscordBot/main.py",
+      interpreter: "/usr/bin/python3",   
       watch: false,
+      autorestart: true,
       env: {
-        PATH: "/root/DiscordBot/.venv/bin:" + process.env.PATH,
-        PYTHONUNBUFFERED: "1"
-      }
-    }
-  ]
+   
+      },
+    },
+  ],
 };
