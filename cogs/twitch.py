@@ -1,6 +1,5 @@
 import os
 import time
-import json
 import logging
 import asyncio
 import aiohttp
@@ -24,7 +23,6 @@ class TwitchMonitor(commands.Cog):
         self._token_expiry = 0
         self._last_stream_id = self._load_last_stream_id()
 
-
     async def cog_load(self):
         if not all([self.client_id, self.client_secret, self.username, self.announce_channel_id]):
             logging.info("Twitch monitor disabled: missing TWITCH_* env vars")
@@ -44,7 +42,6 @@ class TwitchMonitor(commands.Cog):
             await self.session.close()
         logging.info("Twitch monitor stopped.")
 
-
     def _load_last_stream_id(self):
         try:
             with open("last_stream_id.txt", "r", encoding="utf-8") as f:
@@ -58,7 +55,6 @@ class TwitchMonitor(commands.Cog):
                 f.write(stream_id or "")
         except Exception as e:
             logging.warning("Failed to save last_stream_id: %s", e)
-
 
     async def _get_app_token(self):
         if self._token and time.time() < self._token_expiry - 30:
@@ -120,7 +116,6 @@ class TwitchMonitor(commands.Cog):
             games = data.get("data", [])
             return games[0].get("name") if games else None
 
-
     async def _monitor(self):
         while not self.bot.is_closed():
             try:
@@ -144,13 +139,13 @@ class TwitchMonitor(commands.Cog):
                         embed = discord.Embed(
                             title=title,
                             url=url,
-                            description=f" Streaming **{game_name or 'Unknown Game'}**\n",
-                            color=discord.Color.gold(),
+                            description=f"Streaming **{game_name or 'Unknown Game'}**\n",
+                            color=discord.Color.purple(),
                             timestamp=discord.utils.parse_time(started_at) if started_at else None,
                         )
-                        embed.set_author(name=f"{self.username} is streaming", url=url)
+                        embed.set_author(name=f"{self.username} is live on Twitch!", url=url)
                         embed.set_image(url=thumbnail_url)
-                        embed.set_footer(text="")
+                        embed.set_footer(text="Twitch")
 
                         channel = self.bot.get_channel(int(self.announce_channel_id))
                         if channel is None:
@@ -161,7 +156,7 @@ class TwitchMonitor(commands.Cog):
                                 channel = None
 
                         if channel:
-                            await channel.send(content=":red_circle: ", embed=embed)
+                            await channel.send(content=" **Streaming now**", embed=embed)
                             logging.info("Announced Twitch live stream: %s (%s)", title, game_name or "Unknown game")
 
                 else:
@@ -179,7 +174,7 @@ class TwitchMonitor(commands.Cog):
                 logging.exception("Twitch monitor encountered an error.")
 
             await asyncio.sleep(self.poll_interval)
-            
+
 
 async def setup(bot):
     await bot.add_cog(TwitchMonitor(bot))
