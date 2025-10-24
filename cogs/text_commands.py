@@ -14,10 +14,10 @@ class TextCommands(commands.Cog):
         if content == "69" or "sixty-nine" in content or "sixty nine" in content:
             await message.channel.send("nice")
 
-        if "good bot" in content:
+        elif "good bot" in content:
             await message.channel.send("🤖😊")
         
-        if "bad bot" in content:
+        elif "bad bot" in content:
             await message.channel.send("🤖😰")
 
 
