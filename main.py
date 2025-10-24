@@ -3,16 +3,13 @@ from discord.ext import commands
 import logging
 from dotenv import load_dotenv
 import os
-import random
-import aiohttp
-import asyncio
 import sys
+import asyncio
 
 load_dotenv()
 
 token = os.getenv('DISCORD_TOKEN')
 
-# replace file handler with stream handler for cloud logging
 handler = logging.StreamHandler(sys.stdout)
 logging.basicConfig(level=logging.INFO, handlers=[handler])
 
@@ -92,5 +89,3 @@ if __name__ == "__main__":
         asyncio.run(main())
     except KeyboardInterrupt:
         print("Bot stopped by user.")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
