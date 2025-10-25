@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
 import logging
 from dotenv import load_dotenv
 import os
@@ -17,7 +18,18 @@ intents = discord.Intents.default()
 intents.message_content=True
 intents.members = True 
 
-bot = commands.Bot(command_prefix='/', intents=intents)
+client = discord.Client(intents=intents)
+tree = app_commands.CommandTree(client)
+
+bot = commands.Bot(command_prefix='!', intents=intents)
+
+@tree.command(
+    name="commandname",
+    description="my first application Command"
+)
+async def first_command(interaction):
+    await interaction.response.send_message("hello!")
+
 
 role_name = "Valkyrie"
 
