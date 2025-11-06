@@ -104,6 +104,7 @@ async def main():
     await bot.load_extension("cogs.dadjoke")
     await bot.load_extension("cogs.twitch")
     await bot.load_extension("cogs.dice")
+    await bot.load_extension("cogs.duck_photo")
     await bot.load_extension("cogs.tictactoe")
     await bot.load_extension("cogs.text_commands")
 
