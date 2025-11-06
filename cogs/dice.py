@@ -6,7 +6,7 @@ class Dice(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="d20")
+    @commands.hybrid_command(name="d20", description="Roll a twenty-sided die")
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def d20(self, ctx):
         number = random.randint(1, 20)

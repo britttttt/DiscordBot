@@ -62,7 +62,7 @@ class TicTacToe(commands.Cog):
         """Start a new TicTacToe game in this channel."""
         channel_id = ctx.channel.id
         if channel_id in self.active_games:
-            await ctx.send("A game is already active in this channel — Type `/move <position>` to play or `/endgame` to end it.")
+            await ctx.send("A game is already active in this channel — Type `!move <position>` to play or `!endgame` to end it.")
             return
         
         board = getBlankBoard()
@@ -74,7 +74,7 @@ class TicTacToe(commands.Cog):
         await ctx.send(
             f"TicTacToe started by {ctx.author.mention}! Positions are 1-9:\n"
             f"```{getBoardStr(board)}```\n"
-            f"{ctx.author.mention} is **X**. Use `/move <pos>` to play (e.g. `/move 5`)."
+            f"{ctx.author.mention} is **X**. Use `!move <pos>` to play (e.g. `!move 5`)."
         )
 
     @commands.command(name="move")
@@ -84,7 +84,7 @@ class TicTacToe(commands.Cog):
         game = self.active_games.get(channel_id)
         
         if not game:
-            await ctx.send("No active game in this channel. Start a game with `/tictactoe`")
+            await ctx.send("No active game in this channel. Start a game with `!tictactoe`")
             return
         
         position = position.strip()
