@@ -107,6 +107,7 @@ async def main():
     await bot.load_extension("cogs.duck_photo")
     await bot.load_extension("cogs.tictactoe")
     await bot.load_extension("cogs.text_commands")
+    await bot.load_extension("cogs.magic_eight_ball")
 
     await bot.start(token)
 
